@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Akeñ — Dictionnaire bulu–français
 
-First, run the development server:
+Une application web et mobile (PWA) pour consulter, comprendre et transmettre la langue bulu, une langue bantoue du Cameroun.
+
+> **Statut : en développement.** Le projet n'est pas encore public. Rien de ce qui est décrit ci-dessous n'est garanti disponible tant que la case n'est pas cochée.
+
+## Pourquoi ce projet
+
+Le bulu est une langue à tons, peu présente sur le web et mal servie par les outils numériques. Les ouvrages de référence existent, mais ils sont difficiles à consulter, à rechercher et à partager. Akeñ veut rendre ces savoirs accessibles, avec les auteurs mis en avant, et ouvrir un espace où la communauté peut les enrichir sans les altérer.
+
+## Pour qui
+
+- les apprenants et les membres de la diaspora qui veulent comprendre un mot ;
+- les locuteurs qui cherchent une orthographe, un sens ou une expression ;
+- les curieux et chercheurs intéressés par l'histoire de la langue et du peuple bulu.
+
+## Fonctionnalités
+
+- [ ] Recherche de mots tolérante aux accents, aux tons et aux fautes de frappe
+- [ ] Fiche de mot : tons, classe nominale, pluriel, transcription phonétique, définitions, exemples, renvois
+- [ ] Comptes utilisateurs, favoris et historique de recherche
+- [ ] Notes éditoriales rédigées et modifiables par un administrateur
+- [ ] Commentaires des utilisateurs sur chaque mot ou expression, avec modération
+- [ ] Mot du jour et histoire du jour
+- [ ] Traduction assistée, limitée aux entrées du dictionnaire (RAG)
+- [ ] Mode hors connexion et installation sur téléphone
+
+## Technologies
+
+| Rôle | Outil |
+|---|---|
+| Application | Next.js (App Router), TypeScript |
+| Style | Tailwind CSS |
+| Base de données et authentification | Supabase (PostgreSQL), sécurité par rôles (Row Level Security) |
+| Traduction assistée (prévu) | pgvector + API Claude |
+| Hébergement (prévu) | Vercel |
+
+## Démarrer en local
+
+Prérequis : Node.js 20 ou plus récent, Git, un projet Supabase.
+
+```bash
+git clone <URL_DU_DEPOT>
+cd bulu-app
+npm install
+```
+
+Créer un fichier `.env.local` à la racine (ne jamais le publier) :
+
+```
+SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+```
+
+Créer les tables en exécutant `supabase/schema.sql` dans l'éditeur SQL de Supabase, puis lancer l'application :
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure du dépôt
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/             pages et routes
+components/      composants d'interface
+lib/             accès à la base de données, utilitaires
+data/processed/  données extraites des ouvrages (JSON)
+scripts/         extraction et import des données
+supabase/        schéma de la base de données
+docs/            cahier des charges, décisions
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Sources et auteurs
 
-## Learn More
+Les contenus linguistiques viennent d'ouvrages publiés. Chaque mot, expression ou récit est rattaché à sa source et à sa page.
 
-To learn more about Next.js, take a look at the following resources:
+- Marie-Rose Abomo-Maurin, *Parlons boulou : langue bantou du Cameroun*, L'Harmattan, Paris, 2006.
+- Dictionnaire bulu–français : référence en cours de vérification. Le nom des auteurs sera ajouté dès confirmation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Ces ouvrages sont protégés par le droit d'auteur. Leur contenu n'est publié qu'avec l'autorisation des ayants droit ; en attendant, les données sont importées en brouillon et ne sont pas visibles du public.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Feuille de route
 
-## Deploy on Vercel
+0. Cadrage et installation de l'environnement
+1. Extraction et vérification des données
+2. Interface (d'après la maquette)
+3. Base de données et comptes
+4. Mot du jour et histoire du jour
+5. Traduction assistée
+6. Mode hors connexion et mise en production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licence
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+À définir. Le code et les contenus linguistiques relèveront de licences distinctes : les données restent la propriété de leurs auteurs et éditeurs.
