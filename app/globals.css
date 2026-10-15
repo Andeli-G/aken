@@ -1,32 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --canvas: #faf7f2;
-  --card: #f5efeb;
-  --ink: #241b15;
-  --forest: #1e3f32;
-  --terracotta: #c2613b;
-  --ochre: #d4814a;
-  --rule: #e8dfd5;
-  --rule-strong: #ddd3c7;
-}
-
+/* Palette Akeñ, tirée de la maquette (ivoire chaud, vert forêt, argile) */
 @theme inline {
-  --color-canvas: var(--canvas);
-  --color-card: var(--card);
-  --color-ink: var(--ink);
-  --color-forest: var(--forest);
-  --color-terracotta: var(--terracotta);
-  --color-ochre: var(--ochre);
-  --color-rule: var(--rule);
-  --color-rule-strong: var(--rule-strong);
+  --color-surface: #fff8f5;
+  --color-surface-low: #fff1e9;
+  --color-surface-mid: #fdeae0;
+  --color-surface-high: #f7e5db;
+  --color-ink: #231a14;
+  --color-ink-soft: #414844;
+  --color-outline: #727974;
+  --color-line: #c1c8c3;
+  --color-forest: #06291d;
+  --color-forest-mid: #1e3f32;
+  --color-forest-soft: #aacfbd;
+  --color-clay: #9b4420;
+  --color-clay-soft: #ffdbcf;
 
-  --font-serif: var(--font-eb-garamond);
-  --font-sans: var(--font-jakarta);
+  --font-serif: var(--font-garamond), Georgia, serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
 }
 
 body {
-  background: var(--canvas);
-  color: var(--ink);
-  font-family: var(--font-jakarta), sans-serif;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 2px;
 }

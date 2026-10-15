@@ -1,38 +1,53 @@
+import Link from "next/link";
+
+// Lettres de l'alphabet bulu (sans C, Q, R, X)
+const LETTERS = "ABDEFGHIJKLMNOPSTUVWYZ".split("");
+
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-8 px-4 py-12">
-      <header className="text-center">
-        <h1 className="font-serif text-5xl font-semibold tracking-tight text-forest">
-          Akeñ
-        </h1>
-        <p className="mt-2 text-sm font-semibold uppercase tracking-widest text-terracotta">
-          Atelier linguistique bulu
-        </p>
-      </header>
+    <section className="mx-auto max-w-3xl px-5 py-16 text-center sm:py-24">
+      <h1 className="font-serif text-4xl font-semibold leading-tight tracking-tight text-forest sm:text-6xl">
+        Retrouvez les mots,
+        <br />
+        découvrez la langue bulu.
+      </h1>
+      <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
+        Cherchez un mot bulu pour en connaître le sens, le ton, la prononciation et des exemples.
+      </p>
 
-      <input
-        type="search"
-        placeholder="Rechercher un mot…"
-        className="w-full rounded-md border border-rule-strong bg-card px-4 py-3 text-[0.9375rem] outline-none focus:border-forest focus:outline-[1.5px] focus:outline-forest"
-      />
+      <form action="/recherche" className="mx-auto mt-10 flex max-w-xl gap-2">
+        <label htmlFor="q" className="sr-only">Mot à rechercher</label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          required
+          placeholder="Un mot bulu, par exemple « mvoé »"
+          className="min-w-0 flex-1 rounded-lg border border-line bg-white px-4 py-3 text-base"
+        />
+        <button
+          type="submit"
+          className="rounded-lg bg-forest px-5 py-3 font-medium text-white hover:bg-forest-mid"
+        >
+          Chercher
+        </button>
+      </form>
 
-      {/* Carte d'exemple : contenu provisoire */}
-      <article className="rounded-md border border-rule-strong bg-card p-6 shadow-[0_2px_8px_-2px_rgba(36,27,21,0.05)]">
-        <div className="flex flex-wrap items-baseline gap-3">
-          <h2 className="font-serif text-3xl font-medium text-forest">
-            Mot bulu
-          </h2>
-          <span className="text-[0.9375rem] font-medium tracking-wide text-ochre">
-            /prononciation/
-          </span>
-          <span className="rounded-sm border border-rule-strong bg-canvas px-2 py-0.5 text-[0.6875rem] font-bold uppercase tracking-[0.06em]">
-            N.M.
-          </span>
-        </div>
-        <p className="mt-3 font-serif text-lg italic">
-          Exemple de définition en français.
-        </p>
-      </article>
-    </main>
+      <nav aria-label="Parcourir par lettre" className="mt-14">
+        <p className="mb-3 text-sm text-outline">Parcourir par initiale</p>
+        <ul className="flex flex-wrap justify-center gap-1.5">
+          {LETTERS.map((letter) => (
+            <li key={letter}>
+              <Link
+                href={`/recherche?q=${letter}`}
+                className="block min-w-9 rounded-md border border-surface-high bg-surface-low px-2.5 py-1.5 font-serif text-lg text-forest hover:bg-clay-soft"
+              >
+                {letter}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </section>
   );
 }
