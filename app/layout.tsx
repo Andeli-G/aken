@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EB_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import Logo from "@/components/Logo";
 import "./globals.css";
 
 const garamond = EB_Garamond({
@@ -22,14 +23,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${garamond.variable} ${jakarta.variable}`}>
       <body className="min-h-screen flex flex-col antialiased">
+        <div className="bg-clay-soft px-5 py-1.5 text-center text-xs text-clay">
+          Version alpha : le contenu est en cours de vérification.
+        </div>
         <header className="border-b border-surface-high">
           <nav className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-            <Link href="/" className="font-serif text-2xl font-semibold text-forest">
+            <Link href="/" className="flex items-center gap-2.5 font-serif text-2xl font-semibold text-forest">
+              <Logo />
               Akeñ
             </Link>
             <div className="flex gap-6 text-sm font-medium text-ink-soft">
               <Link href="/" className="hover:text-forest">Accueil</Link>
               <Link href="/recherche" className="hover:text-forest">Dictionnaire</Link>
+              <Link href="/sources" className="hover:text-forest">Sources</Link>
             </div>
           </nav>
         </header>

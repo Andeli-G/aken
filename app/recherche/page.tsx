@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { normalize } from "@/lib/normalize";
-import EntryCard from "@/components/EntryCard"
+import EntryCard from "@/components/EntryCard";
+
 type Entry = {
   id: number;
   headword: string;
@@ -88,10 +89,7 @@ export default async function Recherche({
 
         <ul className="divide-y divide-surface-high">
           {words.map(([headword, homographs]) => (
-            // À TOI : ce bloc deviendra un composant (étape 3).
-            <li key={headword} className="py-6">
-              <EntryCard headword={headword} homographs={homographs} />
-            </li>
+            <EntryCard key={headword} headword={headword} homographs={homographs} />
           ))}
         </ul>
       </div>

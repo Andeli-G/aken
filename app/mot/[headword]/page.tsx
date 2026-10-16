@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import ToneCurve from "@/components/ToneCurve";
 
 type Source = {
   title: string;
@@ -97,6 +98,7 @@ export default async function WordPage({
                   <span className="font-serif text-2xl text-clay">{i + 1}.</span>
                 )}
                 <p className="text-sm text-ink-soft">{meta.join(" · ")}</p>
+                <ToneCurve tone={entry.tone} />
               </header>
 
               {entry.senses.map((sense, j) => (
@@ -118,8 +120,9 @@ export default async function WordPage({
                 </div>
               )}
 
-              {/* À TOI : affiche ici les renvois (entry.cross_refs), s'il y en a. */}
-
+              
+              {entry.cross_refs.length > 0 && (<div className="mt-5"><h2 className="text-xs font-semibold uppercase tracking-wide text-clay">Voir aussi</h2><ul>{entry.cross_refs.map((ref, j) => (<li key={j}>{ref}</li>))}</ul></div>)}
+              
               {entryNotes.map((note) => (
                 <aside key={note.id} className="mt-5 rounded-lg bg-surface-mid p-4">
                   {note.title && <h2 className="font-serif text-lg font-semibold text-forest">{note.title}</h2>}
