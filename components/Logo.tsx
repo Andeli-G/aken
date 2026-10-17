@@ -1,8 +1,8 @@
 // Marque d'Akeñ : un « ñ » dont la tilde rappelle la courbe d'un ton.
-export default function Logo({ size = 30 }: { size?: number }) {
+export default function Logo({ size = 30, className = "" }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
-      <rect width="64" height="64" rx="14" fill="#06291d" />
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" className={className}>
+      <rect width="64" height="64" rx="14" fill="#0d3829" />
       <path
         d="M17 20 C23 11 30 11 34 16 S45 22 49 13"
         fill="none" stroke="#ffdbcf" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"

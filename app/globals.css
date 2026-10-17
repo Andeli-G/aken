@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
-/* Palette Akeñ, tirée de la maquette (ivoire chaud, vert forêt, argile) */
+/* Palette Akeñ, tirée de la maquette (ivoire chaud, vert forêt adouci de recueillement, argile pour les accents) */
 @theme inline {
   --color-surface: #fff8f5;
   --color-surface-low: #fff1e9;
   --color-surface-mid: #fdeae0;
   --color-surface-high: #f7e5db;
   --color-ink: #231a14;
-  --color-ink-soft: #414844;
-  --color-outline: #5f6661;
-  --color-line: #c1c8c3;
-  --color-forest: #06291d;
-  --color-forest-mid: #1e3f32;
-  --color-forest-soft: #aacfbd;
+  --color-ink-soft: #484e4a;
+  --color-outline: #68706b;
+  --color-line: #cfd6d1;
+  --color-forest: #0d3829;
+  --color-forest-mid: #1b4b39;
+  --color-forest-soft: #a8cfbd;
   --color-clay: #9b4420;
   --color-clay-soft: #ffdbcf;
 
@@ -29,4 +29,20 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-clay);
   outline-offset: 2px;
+}
+
+/* Filet typographique discret pour rythmer les sections sans encombrement */
+.divider-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--color-line);
+}
+.divider-ornament::before,
+.divider-ornament::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background-color: var(--color-surface-high);
 }

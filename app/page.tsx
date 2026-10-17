@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import SearchBox from "@/components/SearchBox";
+import ToneCurve from "@/components/ToneCurve";
+import AkenNotice from "@/components/AkenNotice";
+import ToneGuide from "@/components/ToneGuide";
+import Logo from "@/components/Logo";
 
 // La page est recalculée au plus toutes les heures : le mot du jour change donc à minuit (heure du Cameroun, à une heure près).
 export const revalidate = 3600;
@@ -68,72 +72,114 @@ export default async function Home() {
 
   const word = await getWordOfTheDay(today, total);
 
-  const meta = word
-    ? [
-        word.noun_class && `classe ${word.noun_class}`,
-        word.tone && `ton ${word.tone}`,
-        word.phonetic && `/${word.phonetic}/`,
-      ].filter(Boolean)
-    : [];
-
   return (
     <>
-      <section className="mx-auto max-w-3xl px-5 py-16 text-center sm:py-24">
-        <Link
-          href={`/mot/${encodeURIComponent("Akeñ")}`}
-          className="inline-block text-xs font-semibold uppercase tracking-widest text-clay hover:underline"
-        >
-          Akeñ · intelligence
-        </Link>
-        <h1 className="mt-5 font-serif text-4xl font-semibold leading-tight tracking-tight text-forest sm:text-6xl">
+      {/* En-tête éditorial et barre de recherche */}
+      <section className="mx-auto max-w-3xl px-5 pt-14 pb-10 text-center sm:pt-20 sm:pb-16">
+        <p className="font-serif text-sm italic tracking-wide text-clay sm:text-base">
+          « Se sentir en paix, accueillir une autre forme d’intelligence. »
+        </p>
+
+        <h1 className="mt-4 font-serif text-4xl font-semibold leading-tight tracking-tight text-forest sm:text-6xl">
           Retrouvez les mots,
           <br />
           découvrez la langue bulu.
         </h1>
-        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
-          Cherchez un mot bulu pour en connaître le sens, le ton, la prononciation et des exemples.
+
+        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
+          Cherchez un mot pour en écouter les tons, comprendre ses nuances
+          et explorer un trésor linguistique du Cameroun.
         </p>
-        <div className="mx-auto mt-10 max-w-xl">
+
+        <div className="mx-auto mt-8 max-w-xl">
           <SearchBox placeholder="Un mot bulu, par exemple « mvoé »" centered />
         </div>
       </section>
 
-      {word && (
-        <section aria-labelledby="mot-du-jour" className="bg-surface-low py-16 sm:py-24">
-          <div className="mx-auto max-w-3xl px-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-clay">Mot du jour</p>
-            <p className="mt-2 text-sm capitalize text-outline">{dateLabel}</p>
+      {/* Notice de l'entrée fondatrice : Akeñ */}
+      <section className="mx-auto max-w-3xl px-5 pb-16 sm:pb-20">
+        <AkenNotice />
+      </section>
 
-            <div className="mt-8 rounded-2xl border border-surface-high bg-white p-8 sm:p-12">
-              <h2 id="mot-du-jour" className="font-serif text-5xl font-semibold leading-tight text-forest sm:text-6xl">
-                {word.headword}
-              </h2>
-              {meta.length > 0 && <p className="mt-3 text-sm text-ink-soft">{meta.join(" · ")}</p>}
-              <p className="mt-8 font-serif text-2xl leading-relaxed">{word.senses[0]}</p>
+      {/* Mot du jour */}
+      {word && (
+        <section aria-labelledby="mot-du-jour" className="bg-surface-low/60 py-16 sm:py-24 border-y border-surface-high/50">
+          <div className="mx-auto max-w-3xl px-5">
+            <div className="flex items-baseline justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-clay">Mot du jour</p>
+                <p className="mt-1 text-sm capitalize text-outline">{dateLabel}</p>
+              </div>
+              <span className="text-xs text-outline italic">Tiré des ouvrages de référence</span>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-surface-high bg-white p-8 sm:p-12 shadow-[0_2px_16px_rgba(13,56,41,0.03)]">
+              <div className="flex flex-wrap items-baseline gap-4">
+                <h2 id="mot-du-jour" className="font-serif text-4xl font-semibold leading-tight text-forest sm:text-6xl">
+                  {word.headword}
+                </h2>
+                {word.phonetic && (
+                  <span className="font-serif text-xl text-ink-soft sm:text-2xl">
+                    /{word.phonetic}/
+                  </span>
+                )}
+                {word.tone && (
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-surface-low px-3 py-1 text-xs text-forest">
+                    <span>ton {word.tone}</span>
+                    <ToneCurve tone={word.tone} size="sm" />
+                  </div>
+                )}
+                {word.noun_class && (
+                  <span className="rounded-full bg-surface-low px-2.5 py-0.5 text-xs text-outline">
+                    classe {word.noun_class}
+                  </span>
+                )}
+              </div>
+
+              <p className="mt-8 font-serif text-2xl leading-relaxed text-ink">
+                {word.senses[0]}
+              </p>
+
               {word.examples[0] && (
-                <p className="mt-8 border-l-2 border-clay-soft pl-4 font-serif text-xl italic leading-relaxed">
-                  {word.examples[0]}
-                </p>
+                <div className="mt-8 border-l-2 border-clay-soft pl-4">
+                  <p className="font-serif text-xl italic leading-relaxed text-ink-soft">
+                    {word.examples[0]}
+                  </p>
+                </div>
               )}
-              <Link
-                href={`/mot/${encodeURIComponent(word.headword)}`}
-                className="mt-10 inline-block font-medium text-forest hover:underline"
-              >
-                Voir la fiche complète →
-              </Link>
+
+              <div className="mt-10 pt-6 border-t border-surface-high flex items-center justify-between">
+                <Link
+                  href={`/mot/${encodeURIComponent(word.headword)}`}
+                  className="font-medium text-forest hover:text-clay transition-colors inline-flex items-center gap-1.5 text-sm"
+                >
+                  <span>Consulter la fiche complète</span>
+                  <span>→</span>
+                </Link>
+                <span className="text-xs text-outline">Mis à jour quotidiennement</span>
+              </div>
             </div>
           </div>
         </section>
       )}
 
-      <section className="mx-auto max-w-3xl px-5 py-14 text-center">
+      {/* Repère culturel : la musique des tons */}
+      <section className="mx-auto max-w-3xl px-5 py-14">
+        <ToneGuide />
+      </section>
+
+      {/* Parcourir par initiale */}
+      <section className="mx-auto max-w-3xl px-5 py-12 text-center">
         <h2 className="font-serif text-2xl font-semibold text-forest">Parcourir par initiale</h2>
-        <ul className="mt-5 flex flex-wrap justify-center gap-1.5">
+        <p className="mx-auto mt-2 max-w-md text-xs text-outline">
+          L’alphabet bulu réunit 22 lettres fondamentales, excluant le C, le Q, le R et le X.
+        </p>
+        <ul className="mt-6 flex flex-wrap justify-center gap-2">
           {LETTERS.map((letter) => (
             <li key={letter}>
               <Link
-                href={`/recherche?q=${letter}`}
-                className="block min-w-9 rounded-md border border-surface-high bg-surface-low px-2.5 py-1.5 font-serif text-lg text-forest hover:bg-clay-soft"
+                href={`/recherche?q=${letter}&page=1`}
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-surface-high bg-white font-serif text-lg text-forest transition hover:bg-clay-soft/50 hover:border-clay/40"
               >
                 {letter}
               </Link>
@@ -142,16 +188,33 @@ export default async function Home() {
         </ul>
       </section>
 
-      <section className="bg-forest py-14 text-center text-white">
-        <div className="mx-auto max-w-3xl px-5">
-          <p className="font-serif text-5xl font-semibold">{total.toLocaleString("fr-FR")}</p>
-          <p className="mt-1 text-forest-soft">entrées consultables</p>
-          <p className="mx-auto mt-5 max-w-xl leading-relaxed text-forest-soft">
-            Akeñ rassemble des ouvrages de référence sur la langue bulu, avec leurs auteurs.
+      {/* Colophon calme de transmission (espace de recueillement, aucun compteur qui presse) */}
+      <section className="bg-forest py-16 text-center text-white">
+        <div className="mx-auto max-w-2xl px-5">
+          <Logo size={40} className="mx-auto mb-6 text-white opacity-90" />
+          <h2 className="font-serif text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            Un travail patient de mémoire et de transmission
+          </h2>
+          <p className="mt-4 leading-relaxed text-forest-soft text-sm sm:text-base">
+            Akeñ préserve et partage plus de {total.toLocaleString("fr-FR")} entrées issues des dictionnaires
+            et travaux de référence sur la langue bulu. Chaque mot est rattaché à son ouvrage d’origine
+            et à sa page, avec le plus profond respect pour les auteurs qui ont fixé cette tradition.
           </p>
-          <Link href="/sources" className="mt-5 inline-block font-medium underline underline-offset-4 hover:text-white">
-            Sources et auteurs
-          </Link>
+          <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm">
+            <Link
+              href="/sources"
+              className="font-medium text-white underline underline-offset-4 hover:text-clay-soft transition-colors"
+            >
+              Découvrir les sources et auteurs
+            </Link>
+            <span className="text-forest-soft">·</span>
+            <Link
+              href="/recherche"
+              className="font-medium text-white underline underline-offset-4 hover:text-clay-soft transition-colors"
+            >
+              Explorer le dictionnaire complet
+            </Link>
+          </div>
         </div>
       </section>
     </>

@@ -92,4 +92,4 @@ Ces ouvrages sont protégés par le droit d'auteur. Leur contenu n'est publié q
 
 ## Licence
 
-À définir. Le code et les contenus linguistiques relèveront de licences distinctes : les données restent la propriété de leurs auteurs et éditeurs.
+Le code source de l'application est placé sous licence MIT. En revanche, cette licence ne s'applique aucunement aux contenus linguistiques, littéraires et archivistiques (définitions, exemples, proverbes, récits, traductions et commentaires d'auteurs) : ces données demeurent la propriété morale et intellectuelle exclusive de leurs auteurs et éditeurs respectifs.
